@@ -25,7 +25,5 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction):
     return
   }
 
-  // Log para la demostración: evidencia que el JWT llegó al backend.
-  console.log(`[${req.method} ${req.originalUrl}] Bearer Token recibido: ${token}`)
   next()
 }

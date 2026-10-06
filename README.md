@@ -75,3 +75,18 @@ Para la demostración, cada request protegido imprime en consola:
 ```
 [GET /api/games] Bearer Token recibido: <token>
 ```
+
+## Despliegue con Docker
+
+Imagen multi-stage: compila TypeScript y ejecuta el JavaScript compilado
+(`node dist/server.js`, puerto 3000). No usa `ts-node` ni modo dev.
+
+```bash
+docker build -t dashboard-videojuegos-backend .
+docker run --rm -p 3000:3000 dashboard-videojuegos-backend
+# health: curl http://localhost:3000/api/health  -> {"status":"ok"}
+```
+
+En el laboratorio corre detrás del proxy nginx + Fail2Ban del repo
+`ldap-jwt-api` (`security-stack/`), que publica el puerto 3000. Se eliminó el
+`console.log` del middleware que imprimía el Bearer token/JWT.
